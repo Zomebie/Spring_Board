@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="info">
+
+	<select id="select_user" resultType="String">
+		select id from users where
+		id=#{id} and pw=#{pw}
+	</select>
+
+	<insert id="insert_user">
+		insert into users
+		values (#{id},#{pw},#{email},#{name},#{address})
+	</insert>
+	
+	
+	<select id="list_username" resultType="hello.spring.bit.dto.UserDTO">
+		select id from users
+	</select>
+	
+	<select id="list_userinfo" resultType="hello.spring.bit.dto.UserDTO">
+		select * from users where id=#{id}
+	</select>
+	
+	<delete id="delete">
+	delete from users where id=#{id}
+	</delete>
+	
+</mapper>

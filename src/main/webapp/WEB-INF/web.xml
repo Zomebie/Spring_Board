@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/root-context.xml</param-value><!-- 부모 xml-->
+	</context-param>
+	
+	<!-- Creates the Spring Container shared by all Servlets and Filters -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class><!-- 부모의 설정 파일 -->
+	</listener>
+
+	<!-- Processes application requests -->
+	<!-- 디스패처 서블릿 부분 -->
+	<servlet>
+		<servlet-name>appServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class><!-- 2. Dispatcher가 가로챔 : 스프링프레임웍에 있는 클래스  -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/appServlet/servlet-context.xml</param-value><!-- 3.servlet-context.xml안에서 컨트롤러로 요청전달 :서블릿 콘텍스트 xml을 루트 콘텍스트 xml에 넣어도 작동함 -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>appServlet</servlet-name>
+		<url-pattern>/</url-pattern> <!-- 1번 사용자가 /로 요청이 들어오면 -->
+	</servlet-mapping>
+
+	<!-- 한글 처리 -->
+	<filter>
+		<filter-name>hangleFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>Encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>hangleFilter</filter-name>
+		<url-pattern>/*</url-pattern> <!-- 들어오는 url주소를 전부 필터링 처리 -->
+	</filter-mapping>
+	<!-- 한글 처리 -->
+
+</web-app>

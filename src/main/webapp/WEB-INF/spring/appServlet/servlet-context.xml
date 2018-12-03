@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
+	
+	<!-- Enables the Spring MVC @Controller programming model -->
+	<annotation-driven />	<!-- @Controller, @Service, @Component, @Repository 를 자동으로 사용할 수 있게 만들어줌 -->
+	<!-- 리퀘스트 매핑사용 컨트롤러사용  -->
+
+	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
+	<resources mapping="/resources/**" location="/resources/" /> <!-- /이 붙은 사용자 요청중 /resources/만 제외에서 컨트롤러가 아닌 여기서 처리 -->
+
+	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
+	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<beans:property name="prefix" value="/WEB-INF/views/" /><!-- 앞 경로 -->
+		<!-- 홈 컨트롤러에 있는 리턴 값이 이 곳 사이에 들어간다고 생각하면 됨 -->
+		<beans:property name="suffix" value=".jsp" /><!-- 뒷 경로 -->
+		<!-- 앞 경로 뒷 경로를 다시 합쳐줌 -->
+	</beans:bean>
+	
+	<context:component-scan base-package="hello.spring.bit" />
+	
+	<aop:aspectj-autoproxy>
+	</aop:aspectj-autoproxy>
+ <!-- 
+	<beans:bean id="homeController" class="hello.spring.bit.controller.HomeController">  컨트롤러 어노케이션에 대한 빈 생성 
+    </beans:bean>
+	
+	<beans:property name="homeService" ref="homeService"></beans:property> Controller에 만든 홈서비스 겟터 셋터에  bean class의 homeService 값을 셋터 값에 넣어준다.
+	</beans:bean>
+	
+	<beans:bean id="homeService" class="hello.spring.bit.service.HomeServiceImpl"> 서비스 어노케이션에 대한 빈 생성
+		<beans:property name="dao" ref="homeDAO"></beans:property> @autowired의 역할 : 이미 주입된 객체를 대입해주는것
+	</beans:bean>
+	
+	<beans:bean id="homeDAO" class="hello.spring.bit.dao.HomeDAOImpl">  레퍼지토리 어노케이션에 대한 빈 생성 
+	</beans:bean>
+	
+	
+	 하위 모든 패키지를 읽음  -->
+	 
+
+	</beans:beans>
+	
+	
+	
+	
+

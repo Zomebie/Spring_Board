@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+		
+		<!-- 프로젝트 내에서 공통적인 내용을 입력하는 곳 -->
+		
+		<!-- Connection Pool -->
+		<!-- dataSource DB에 접근하기 위한 정보들을 담고있다. -->
+		<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
+			<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+			<property name="url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
+			<property name="username" value="hr"/>
+			<property name="password" value="1234"/>
+		</bean>
+		 
+		 <!-- sqlSession들이 모여있는 공장을 빈으로(객체로)만들어주기! -->
+		<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSession">
+			<property name="dataSource" ref="dataSource"/> <!-- SqlSessionFactoryBean객체가 가지고 있는 field 중 dataSource에  주입(setter) -->
+			<property name="mapperLocations" value="classpath:/mappers/*mapper.xml"/> <!-- 내가 만든  mapper가 있는 경로 --><!-- mappers 파일안의 mapper.xml로 된 형태의 파일을 전부 읽음 -->
+		</bean>
+		
+		<bean class="org.mybatis.spring.SqlSessionTemplate">
+			<constructor-arg index="0" ref="sqlSession"/> <!-- 생성자 대입 -->
+		</bean>  
+		<!-- Connection Pool -->
+</beans>
